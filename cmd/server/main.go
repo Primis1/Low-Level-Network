@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 	"net"
-	echoUpper "server/pkg/echoUpper"
+	"server/pkg/echoUpper"
 )
 
 func main() {
