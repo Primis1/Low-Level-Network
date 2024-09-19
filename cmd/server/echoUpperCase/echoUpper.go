@@ -1,5 +1,0 @@
-package echoUpper
-
-func echoUpper() {
-	
-}
