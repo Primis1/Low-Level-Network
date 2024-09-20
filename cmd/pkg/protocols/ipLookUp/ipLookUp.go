@@ -1,17 +1,18 @@
-package dns
+package protocols
 
 import (
 	"fmt"
-	"log" 
+	"log"
+	applogging "low-level-tools/cmd/models/appLogging"
 	"net"
 	"os"
 )
 
-func IpLookUp() {
-	// if len(os.Args) != 2  {
-	// 	log.Println("%s: usage: <host>", os.Args[0])
-	// 	log.Fatalf("expected exactly one argument; got %d", len(os.Args)-1)
-	// }
+func (app *applogging.Application) IpLookUp() {
+	if len(os.Args) != 2  {
+		log.Println("%s: usage: <host>", os.Args[0])
+		log.Fatalf("expected exactly one argument; got %d", len(os.Args)-1)
+	}
 
 	host := os.Args[1]
 	ips, err := net.LookupIP(host)
@@ -26,10 +27,9 @@ func IpLookUp() {
 	for _, ip := range ips {
 		if ip.To4() != nil {
 			fmt.Println(ip)
+			return
 		}
-		goto IPV6
 	}
-IPV6:
 	for _, ip := range ips {
 		if ip.To16() != nil {
 			fmt.Println(ip)
