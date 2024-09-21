@@ -5,7 +5,10 @@ import (
 	"os"
 )
 
+type LogLevel int
+
 type Application struct {
+	level LogLevel
 	errorLog *log.Logger
 	infoLog  *log.Logger
 }
@@ -13,7 +16,18 @@ type Application struct {
 var infoLog = log.New(os.Stdout, "INFO: \t", log.Ldate|log.Ltime)
 var errorLog = log.New(os.Stderr, "ERROR: \t", log.Ltime|log.Llongfile)
 
-var App = &Application{
-	errorLog: errorLog,
-	infoLog:  infoLog,
+
+const Level (
+	DEBUG LogLevel iota
+	INFO
+	ERR
+)
+
+func NewLogger(Level LogLevel) *Logger {
+	return &Application{
+		level: Level,
+		errorLog: errorLog,
+		infoLog:  infoLog,
+	
+	}
 }

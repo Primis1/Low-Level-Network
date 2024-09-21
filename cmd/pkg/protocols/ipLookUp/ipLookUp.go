@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func (app *applogging.Application) IpLookUp() {
+func (app *applogging.Application) ipLookUp() {
 	if len(os.Args) != 2  {
 		log.Println("%s: usage: <host>", os.Args[0])
 		log.Fatalf("expected exactly one argument; got %d", len(os.Args)-1)
