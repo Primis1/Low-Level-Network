@@ -1,6 +1,7 @@
 package main
-import 	applogging "low-level-tools/cmd/models/appLogging"
+
+import "low-level-tools/cmd/pkg/protocols/ipLookUp"
 
 func main() {
-	applogging.
+	protocols.IpLookUp()
 }
