@@ -1,23 +1,23 @@
 package protocols
 
 import (
+	"low-level-tools/cmd/pkg/logging"
 	"net"
 	"os"
-	"low-level-tools/cmd/models/logging"
 )
 
 func IpLookUp() {
+
 	log := logging.NewLogger(logging.INFO)
 	errMsg := logging.NewLogger(logging.ERR)
 
-	logging.Some()
-	if len(os.Args) != 2  {
+	if len(os.Args) != 2 {
 		log.Info("Should use DNS of the website to get IP")
 		errMsg.Error("expected exactly one argument; got %d", len(os.Args)-1)
 	}
 
 	host := os.Args[1]
-	
+
 	ips, err := net.LookupIP(host)
 	if err != nil {
 		log.Info("lookup ip: %s: %v", host, err)

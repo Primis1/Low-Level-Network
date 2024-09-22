@@ -1,7 +1,12 @@
 package main
 
-import "low-level-tools/cmd/pkg/protocols/ipLookUp"
+import (
+	"low-level-tools/cmd/config"
+	"low-level-tools/cmd/pkg/logging"
+)
 
 func main() {
-	protocols.IpLookUp()
+	config.SetKeyENV()
+
+	logging.NewLogger(logging.INFO).Info("something")
 }
