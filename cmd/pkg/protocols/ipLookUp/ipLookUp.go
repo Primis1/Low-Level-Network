@@ -15,7 +15,6 @@ func IpLookUp() {
 		log.Info("Should use DNS of the website to get IP")
 		errMsg.Error("expected exactly one argument; got %d", len(os.Args)-1)
 	}
-
 	host := os.Args[1]
 
 	ips, err := net.LookupIP(host)

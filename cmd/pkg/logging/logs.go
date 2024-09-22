@@ -34,18 +34,38 @@ func NewLogger(Level logLevel) *application {
 	}
 }
 
+func assertion(msg any) string {
+	var comp string
+
+	switch v := msg.(type) {
+	case string:
+		comp = v
+	default:
+		comp = fmt.Sprint(v)
+	}
+
+	return comp
+}
+
 func (l *application) Info(msg any, args ...any) {
+
+	compiled := assertion(msg)
+
 	if l.level <= INFO {
 		file, line := getCaller()
-		formattedMessage := fmt.Sprintf("" + msg, args...) // Format the message using the provided arguments
+		formattedMessage := fmt.Sprintf(compiled, args...) // Format the message using the provided arguments
 		l.infoLog.Printf("[%s : %d] \n\n%s\n\n", file, line, formattedMessage)
 	}
 }
 
-func (l *application) Error(err ...any) {
+func (l *application) Error(msg any, args ...any) {
+
+	compiled := assertion(msg)
 	if l.level <= ERR {
 		file, line := getCaller()
-		l.errorLog.Fatalf("[%s : %d] \n\n%s\n\n", file, line, fmt.Sprint(err...))
+		formattedMessage := fmt.Sprintf(compiled, args...) // Format the message using the provided arguments
+
+		l.errorLog.Fatalf("[%s : %d] \n\n%s\n\n", file, line, formattedMessage)
 	}
 }
 
@@ -62,7 +82,7 @@ func getCaller() (string, int) {
 		return file, line // Return without modifying if key is not set
 	}
 
-	regExp, _ := regexp.Compile(".*" + regexp.QuoteMeta(key)) // regex for deleting left side 
+	regExp, _ := regexp.Compile(".*" + regexp.QuoteMeta(key)) // regex for deleting left side
 
 	file = regExp.ReplaceAllString(file, key)
 
