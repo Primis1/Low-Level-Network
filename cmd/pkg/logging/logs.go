@@ -34,10 +34,11 @@ func NewLogger(Level logLevel) *application {
 	}
 }
 
-func (l *application) Info(msg ...any) {
+func (l *application) Info(msg any, args ...any) {
 	if l.level <= INFO {
 		file, line := getCaller()
-		l.infoLog.Printf("[%s : %d] \n\n%s\n\n", file, line, fmt.Sprint(msg...))
+		formattedMessage := fmt.Sprintf("" + msg, args...) // Format the message using the provided arguments
+		l.infoLog.Printf("[%s : %d] \n\n%s\n\n", file, line, formattedMessage)
 	}
 }
 

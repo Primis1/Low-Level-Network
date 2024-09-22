@@ -2,11 +2,11 @@ package main
 
 import (
 	"low-level-tools/cmd/config"
-	"low-level-tools/cmd/pkg/logging"
+	protocols "low-level-tools/cmd/pkg/protocols/LLHttp"
 )
 
 func main() {
 	config.SetKeyENV()
 
-	logging.NewLogger(logging.INFO).Info("something")
+	protocols.TCPHttpReq()
 }
