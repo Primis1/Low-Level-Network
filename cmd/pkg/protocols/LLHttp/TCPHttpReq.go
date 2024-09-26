@@ -71,56 +71,44 @@ func TCPHttpReq() {
 	}
 }
 
-type Header struct {
-	key, value string
-}
+func NewRequst(host, url, method, body string) *Request {
+	var container *Request
 
-type Request struct {
-	Method, Path, Body string
-	Headers            []Header
-}
-
-type Response struct {
-	StatucCode int
-	Headers    []Header
-	Body       string
-}
-
-func NewRequst(host, url, method, body string) (*Request, s nil) {
 	switch {
 	case method == "":
 		errMsg.Error("missing method declaration")
-		return s
 	case host == "":
 		errMsg.Error("missing host declaration")
-		return s
 	case !strings.HasPrefix(url, "/"):
 		errMsg.Error("missing url/path declaration")
-		return s
 	default:
 		headers := make([]Header, 2)
 		headers[0] = Header{"Host", host}
 		if body != "" {
 			headers = append(headers, Header{"Content-Lenght", fmt.Sprint(len(body))})
 		}
-		return &Request{Method: method, Path: url, Headers: headers, Body: body}, nil
+		container = &Request{Method: method, Path: url, Headers: headers, Body: body}
 	}
+	return container
 }
 
-func NewResponse(st int, body string) (*Response, s nil) {
+func NewResponse(st int, body string) *Response {
+	var container *Response
+
 	switch {
-	case st < 100 || st < 599: 
+	case st < 100 || st < 599:
 		errMsg.Error("Invalid status code")
-		return s	
 	default:
 		if body == "" {
 			body = http.StatusText(st)
 		}
+		headers := []Header{{"Content-Length", fmt.Sprintf("%d", len(body))}}
 
-		return &Response{
-			StatucCode: st,
-			Headers   : headers,
-			Body      : body,
-				}
+		container = &Response{
+			StatusCode: st,
+			Headers:    headers,
+			Body:       body,
 		}
+	}
+	return container
 }
