@@ -5,8 +5,12 @@ import (
 	protocols "low-level-tools/cmd/pkg/protocols/LLHttp"
 )
 
-func main() {
+func init() {
 	config.SetKeyENV()
+}
+
+func main() {
+	config.SetKeyENV()	
 
 	protocols.TCPHttpReq()
 

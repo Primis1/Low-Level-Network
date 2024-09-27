@@ -53,7 +53,7 @@ func TestHTTPResponse(t *testing.T) {
 				t.Errorf("ParseResponse(%q) = %#+v, want %#+v", tt.input, got, tt.want)
 			}
 
-			gotStr := got.String()
+			gotStr := string(got.Body)
 			got2, err := protocols.ParseResponse(gotStr)
 			if err != nil {
 				t.Errorf("ParseResponse(%q) returned error: %v", gotStr, err)
@@ -102,7 +102,7 @@ func TestHTTPRequest(t *testing.T) {
 				t.Errorf("ParseRequest(%q) = %#+v, want %#+v", tt.input, got, tt.want)
 			}
 
-			gotStr := got.String()
+			gotStr := string(got.Body)
 			got2, err := protocols.ParseRequest(gotStr)
 			if err != nil {
 				t.Errorf("ParseRequest(%q) returned error: %v", gotStr, err)
