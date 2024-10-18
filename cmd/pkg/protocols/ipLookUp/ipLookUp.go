@@ -6,6 +6,11 @@ import (
 	"os"
 )
 
+// What steps we do:
+// initialize the logger, how we can do without it anyways?
+// we use standart input, i.e terminal command before running the executable
+// 		we set/receive DNS of the resource
+
 func IpLookUp() {
 
 	log := logging.NewLogger(logging.INFO)
@@ -19,13 +24,13 @@ func IpLookUp() {
 
 	ips, err := net.LookupIP(host)
 	if err != nil {
-		log.Info("lookup ip: %s: %v", host, err)
+		log.Error("lookup ip: %s: %v", host, err)
 	}
 
 	if len(ips) == 0 {
 		errMsg.Error("no ips found for %s", host)
 	}
-
+	log.Info(ips)
 	for _, ip := range ips {
 		if ip.To4() != nil {
 			log.Info(ip)

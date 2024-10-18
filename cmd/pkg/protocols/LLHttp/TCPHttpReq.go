@@ -1,3 +1,7 @@
+// We do write the HTTP request, with use of TCP bridge that we establish.
+// Also we do geenrate headers and body for that request 
+// We have to enable argumets via terminal and set the default values to 'em
+
 package protocols
 
 import (
@@ -86,41 +90,40 @@ type Response struct {
 	Body       string
 }
 
-func NewRequst(host, url, method, body string) (*Request, s nil) {
+func NewRequest(host, url, method, body string) *Request {
 	switch {
 	case method == "":
 		errMsg.Error("missing method declaration")
-		return s
+		return nil
 	case host == "":
 		errMsg.Error("missing host declaration")
-		return s
+		return nil
 	case !strings.HasPrefix(url, "/"):
 		errMsg.Error("missing url/path declaration")
-		return s
+		return nil
 	default:
 		headers := make([]Header, 2)
 		headers[0] = Header{"Host", host}
 		if body != "" {
-			headers = append(headers, Header{"Content-Lenght", fmt.Sprint(len(body))})
+			headers = append(headers, Header{"Content-Length", fmt.Sprint(len(body))})
 		}
-		return &Request{Method: method, Path: url, Headers: headers, Body: body}, nil
+		return &Request{Method: method, Path: url, Headers: headers, Body: body}
 	}
 }
 
-func NewResponse(st int, body string) (*Response, s nil) {
+func NewResponse(st int, body string) (*Response, error) {
 	switch {
-	case st < 100 || st < 599: 
-		errMsg.Error("Invalid status code")
-		return s	
+	case st < 100 || st > 599:
+		return nil, fmt.Errorf("invalid status code")
 	default:
 		if body == "" {
 			body = http.StatusText(st)
 		}
 
+		headers := []Header{} // Define headers as necessary
 		return &Response{
-			StatucCode: st,
-			Headers   : headers,
-			Body      : body,
-				}
-		}
+			Headers: headers,
+			Body:    body,
+		}, nil
+	}
 }
