@@ -8,7 +8,7 @@ import (
 
 // What steps we do:
 // initialize the logger, how we can do without it anyways?
-// we use standart input, i.e terminal command before running the executable
+// we use standard input, i.e terminal command before running the executable
 // 		we set/receive DNS of the resource
 
 func IpLookUp() {

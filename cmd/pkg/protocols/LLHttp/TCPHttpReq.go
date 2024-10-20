@@ -1,6 +1,6 @@
 // We do write the HTTP request, with use of TCP bridge that we establish.
-// Also we do geenrate headers and body for that request 
-// We have to enable argumets via terminal and set the default values to 'em
+// Also we do generate headers and body for that request 
+// We have to enable arguments via terminal and set the default values to 'em
 
 package protocols
 
